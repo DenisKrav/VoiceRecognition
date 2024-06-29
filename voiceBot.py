@@ -5,6 +5,7 @@ import subprocess
 import webbrowser
 import pyowm
 import translators as ts
+import gpt
 
 recognizer = sr.Recognizer()
 
@@ -47,6 +48,9 @@ def process_voice_command(text):
         weather = observation.weather
         weather = "Температура (градусів Цельсію): " + str(int(weather.temperature('celsius')['temp']))
         print(weather)
+    elif "джарвіс" in text.lower():
+        result = gpt.generate(text + " and translate into Ukrainian. Don't print English words")
+        print(result)
     elif "прощавай" in text.lower():
         print("До побачення! Гарного дня!")
         return True
