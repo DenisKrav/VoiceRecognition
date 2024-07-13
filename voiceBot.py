@@ -6,6 +6,8 @@ import webbrowser
 import pyowm
 import translators as ts
 import gpt
+import gtts
+import os
 
 recognizer = sr.Recognizer()
 
@@ -51,6 +53,17 @@ def process_voice_command(text):
     elif "джарвіс" in text.lower():
         result = gpt.generate(text + " and translate into Ukrainian. Don't print English words")
         print(result)
+        try:
+            myobj = gtts.gTTS(text=result, lang="uk", slow=False)
+            myobj.save("result.mp3")
+            os.system("result.mp3")
+        except Exception as ex:
+            print(ex)
+            input()
+    elif "код" in text.lower():
+        code = gpt.generate(text + "і виведи тільки код")[3:-3]
+        with open("generated_code.py", "w", encoding="utf-8") as file:
+            file.write(code)
     elif "прощавай" in text.lower():
         print("До побачення! Гарного дня!")
         return True
