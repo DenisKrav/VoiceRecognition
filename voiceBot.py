@@ -33,9 +33,9 @@ def convert_voice_to_text(audio):
 
 def process_voice_command(text):
     if "привіт" in text.lower():
-        print("Привіт! Як я можу Вам допомогти?")
+        return ("Привіт! Як я можу Вам допомогти?")
     elif "як справи" in text.lower():
-        print("Супер, а у Вас?")
+        return ("Супер, а у Вас?")
     elif "калькулятор" in text.lower():
         subprocess.call(['calc'])
     elif "логіка" in text.lower():
@@ -49,34 +49,30 @@ def process_voice_command(text):
         location = observation.location
         weather = observation.weather
         weather = "Температура (градусів Цельсію): " + str(int(weather.temperature('celsius')['temp']))
-        print(weather)
+        return (weather)
     elif "джарвіс" in text.lower():
         result = gpt.generate(text + " and translate into Ukrainian. Don't print English words")
-        print(result)
         try:
             myobj = gtts.gTTS(text=result, lang="uk", slow=False)
             myobj.save("result.mp3")
             os.system("result.mp3")
+            return  result
         except Exception as ex:
-            print(ex)
-            input()
+            return (ex)
     elif "код" in text.lower():
         code = gpt.generate(text + "і виведи тільки код")[3:-3]
         with open("generated_code.py", "w", encoding="utf-8") as file:
             file.write(code)
     elif "прощавай" in text.lower():
-        print("До побачення! Гарного дня!")
-        return True
+        return ("До побачення! Гарного дня!")
     else:
-        print("Я Вас не розумію. Повторіть Ваш запит")
+        return ("Я Вас не розумію. Повторіть Ваш запит")
     return False
 
 def main():
-    end_program = False
-    while not end_program:
-        audio = capture_voice_input()
-        text = convert_voice_to_text(audio)
-        end_program = process_voice_command(text)
+    audio = capture_voice_input()
+    text = convert_voice_to_text(audio)
+    return process_voice_command(text)
 
 if __name__ == "__main__":
     main()
