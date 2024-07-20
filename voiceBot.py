@@ -56,7 +56,7 @@ def process_voice_command(text):
             myobj = gtts.gTTS(text=result, lang="uk", slow=False)
             myobj.save("result.mp3")
             os.system("result.mp3")
-            return  result
+            return result
         except Exception as ex:
             return (ex)
     elif "код" in text.lower():

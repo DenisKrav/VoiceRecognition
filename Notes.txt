@@ -1,0 +1,8 @@
+Щоб запустити проект треба такі бібліотеки:
+SpeechRecognition
+PyAudio
+pyowm
+translators
+groq
+gtts
+customtkinter
